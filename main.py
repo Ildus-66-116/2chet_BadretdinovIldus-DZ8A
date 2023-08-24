@@ -4,10 +4,27 @@
 # # и Вы должны реализовать функционал
 # # для изменения и удаления данных.
 
+def redact_contact(phonebook, search_key):
+    # del_contacts(phonebook, search_key)
+    # last_name = input('Фамилия: ')
+    # first_name = input('Имя: ')
+    # middle_name = input('Отчество: ')
+    # phone_number = input('Номер телефона: ')
+    # add_contact(phonebook, last_name, first_name, middle_name, phone_number)
+    search_key = search_key.capitalize()
+    for i in range(len(phonebook)):
+        if search_key in phonebook[i].values():
+            phonebook[i]['last_name'] = input('Фамилия: ')
+            phonebook[i]['first_name'] = input('Имя: ')
+            phonebook[i]['middle_name'] = input('Отчество: ')
+            phonebook[i]['phone_number'] = input('Номер телефона: ') + '\n'
+            
 def del_contacts(phonebook, search_key):
+    search_key = search_key.capitalize()
     for i in range(len(phonebook) -1, -1, -1):
-        if search_key.capitalize() in phonebook[i].values():
+        if search_key in phonebook[i].values():
             del phonebook[i]
+            return
             
 
 def load_file(filename):
@@ -71,6 +88,7 @@ def main():
         print("4. Поиск по имени/фамилии")
         print("5. Загрузить из файла")
         print("6. Удаление контакта")
+        print("7. Редактирование контакты")
         print("9. Выйти")
 
         choice = input('Выберите действие: ')
@@ -93,13 +111,14 @@ def main():
                 for cur_dict in results:
                     for item in cur_dict.values():
                         print(item, end='')
-            else:
-                print('Контактов по вашему запросу нет!')
         elif choice == '5':
             phonebook = load_file(filename)
         elif choice == '6':
             search_key = input("Введите имя или фамилию для поиска: ")
             del_contacts(phonebook, search_key)
+        elif choice == '7':
+            search_key = input("Введите имя или фамилию для поиска: ")
+            redact_contact(phonebook, search_key)
 
 
 
