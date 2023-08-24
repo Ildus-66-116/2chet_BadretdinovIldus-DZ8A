@@ -1,7 +1,14 @@
-# Задача 38: Дополнить телефонный справочник возможностью изменения и удаления данных.
-# Пользователь также может ввести имя или фамилию, и Вы должны реализовать функционал
-# для изменения и удаления данных.
+# # Задача 38: Дополнить телефонный справочник возможностью изменения 
+# # и удаления данных.
+# # Пользователь также может ввести имя или фамилию, 
+# # и Вы должны реализовать функционал
+# # для изменения и удаления данных.
 
+def del_contacts(phonebook, search_key):
+    for i in range(len(phonebook) -1, -1, -1):
+        if search_key.capitalize() in phonebook[i].values():
+            del phonebook[i]
+            
 
 def load_file(filename):
     phonebook = []
@@ -56,14 +63,15 @@ def main():
     phonebook = []
     filename = 'contacts.txt'
     choice = None
-    while choice != '6':
+    while choice != '9':
         print('\nВыберите пункт меню:')
         print("1. Добавить контакт")
         print("2. Сохранить файл")
         print("3. Вывести все контакты")
         print("4. Поиск по имени/фамилии")
         print("5. Загрузить из файла")
-        print("6. Выйти")
+        print("6. Удаление контакта")
+        print("9. Выйти")
 
         choice = input('Выберите действие: ')
         if choice == '1':
@@ -78,18 +86,24 @@ def main():
             views_contacts(phonebook)
         elif choice == '4':
             search_key = input("Введите имя или фамилию для поиска: ")
-            results = search_contacts(phonebook, search_key)
+            results = list(search_contacts(phonebook, search_key))
             if (results):
                 print('Найдены контакты: ')
-                print(results)
+                # print(results)
+                for cur_dict in results:
+                    for item in cur_dict.values():
+                        print(item, end='')
             else:
                 print('Контактов по вашему запросу нет!')
         elif choice == '5':
             phonebook = load_file(filename)
-
-
+        elif choice == '6':
+            search_key = input("Введите имя или фамилию для поиска: ")
+            del_contacts(phonebook, search_key)
 
 
 
 if __name__ == "__main__":
     main()
+
+
